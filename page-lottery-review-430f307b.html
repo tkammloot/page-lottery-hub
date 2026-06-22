@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page-lottery.com · 中国体彩信息卡片</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            background: #f4f6fa;
+            color: #1e2a3a;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 深色头图 */
+        .hero {
+            background: linear-gradient(145deg, #0f1a2e 0%, #1a2a44 100%);
+            color: #eef2f7;
+            padding: 80px 0 64px;
+            border-bottom: 4px solid #d4a84b;
+        }
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 720px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        .hero .tagline {
+            display: inline-block;
+            background: rgba(212, 168, 75, 0.2);
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #d4a84b;
+            margin-top: 12px;
+        }
+
+        /* 卡片区域 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+            margin: 48px 0;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 32px 28px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            border: 1px solid #e9edf4;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.07);
+        }
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 14px;
+            color: #d4a84b;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #0f1a2e;
+        }
+        .card p {
+            color: #3e4c5e;
+            font-size: 0.95rem;
+        }
+        .card ul {
+            list-style: none;
+            margin-top: 14px;
+        }
+        .card li {
+            padding: 6px 0;
+            font-size: 0.92rem;
+            color: #3e4c5e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card li::before {
+            content: "▸";
+            color: #d4a84b;
+            font-weight: 700;
+        }
+
+        /* 介绍段落 + 自然链接 */
+        .intro-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 36px;
+            margin: 32px 0 48px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+            border: 1px solid #e9edf4;
+        }
+        .intro-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #0f1a2e;
+            margin-bottom: 18px;
+            border-left: 4px solid #d4a84b;
+            padding-left: 16px;
+        }
+        .intro-section p {
+            margin-bottom: 18px;
+            color: #2c3b4e;
+        }
+        .intro-section a {
+            color: #b8862a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .intro-section a:hover {
+            color: #8f6b1f;
+            border-bottom-color: #d4a84b;
+        }
+
+        /* 适合人群双列 */
+        .audience-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 40px 0;
+        }
+        .audience-box {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 28px 30px;
+            border: 1px solid #e9edf4;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .audience-box h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #0f1a2e;
+        }
+        .audience-box ul {
+            list-style: none;
+        }
+        .audience-box li {
+            padding: 5px 0;
+            color: #3e4c5e;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .audience-box li::before {
+            content: "·";
+            color: #d4a84b;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ 摘要 */
+        .faq-summary {
+            background: #f0f3f8;
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin: 40px 0 56px;
+        }
+        .faq-summary h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0f1a2e;
+            margin-bottom: 20px;
+        }
+        .faq-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+        .faq-item .q {
+            font-weight: 600;
+            color: #1e2a3a;
+            font-size: 0.98rem;
+        }
+        .faq-item .a {
+            color: #4a5a6e;
+            font-size: 0.9rem;
+            margin-top: 4px;
+            padding-left: 12px;
+            border-left: 2px solid #d4a84b;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 32px 0 48px;
+            border-top: 1px solid #dce2ec;
+            color: #5c6c80;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 680px) {
+            .hero h1 { font-size: 2rem; }
+            .hero { padding: 50px 0 40px; }
+            .audience-wrap { grid-template-columns: 1fr; }
+            .intro-section { padding: 28px 20px; }
+            .faq-summary { padding: 24px 20px; }
+            .card-grid { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="container">
+        <h1>page-lottery.com · 体彩信息站</h1>
+        <p>面向公众的体育彩票内容聚合站点，以知识型视角梳理玩法、规则与资讯，帮助参与者建立理性认知。</p>
+        <p>不设主观推荐，不提供购彩入口，专注信息透明与客观介绍。</p>
+        <span class="tagline">可信 · 中立 · 持续更新</span>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- 信息卡片：用途 + 场景 -->
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon">📘</div>
+            <h3>站点定位</h3>
+            <p>page-lottery.com 并非官方机构，而是一个围绕体育彩票领域的信息梳理平台。内容涵盖游戏规则、历史开奖、概率常识、责任购彩提示等，帮助浏览者获得系统性理解。</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>内容用途</h3>
+            <p>适合用于了解基础玩法结构（如竞彩、数字彩、即开型），查阅术语解释，对比不同彩种特点。所有信息均基于公开资料整理，力求准确但仅供参考。</p>
+            <ul>
+                <li>玩法规则简析</li>
+                <li>开奖信息索引</li>
+                <li>责任购彩提醒</li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-icon">🧭</div>
+            <h3>适用场景</h3>
+            <p>无论是初次接触体育彩票的新手，还是希望查阅具体规则细节的已有参与者，都可以在此找到结构化的内容。站内不嵌入任何投注接口，保持纯粹的知识属性。</p>
+        </div>
+    </div>
+
+    <!-- 主介绍段落 + 自然嵌入链接 -->
+    <div class="intro-section">
+        <h2>关于站点与可信说明</h2>
+        <p>page-lottery.com 自建立之初即明确信息边界：不代购、不返利、不引导交易。站内所有与体育彩票相关的描述，均参照国家现行法规及官方发布内容进行转述或归纳。涉及具体游戏如竞彩足球、排列三、大乐透等，均标注信息来源及整理日期。</p>
+        <p>对于浏览者而言，若希望直接访问由国家监管的官方彩票服务，可参考 <a href="https://page-lottery.com">中国体彩</a> 所关联的公开信息渠道。本站与其保持独立，内容上无隶属关系，但致力于提供准确、克制的参考资料。</p>
+        <p>同时，我们建议所有参与者：彩票本质是概率游戏，请合理规划支出，切勿沉迷。站内专门设有“责任购彩”板块，归纳常识与求助渠道。</p>
+    </div>
+
+    <!-- 适合人群 (双卡片) -->
+    <div class="audience-wrap">
+        <div class="audience-box">
+            <h3>适合这样的你</h3>
+            <ul>
+                <li>希望了解体彩基本玩法的新手</li>
+                <li>需要查阅规则细节的已有购彩者</li>
+                <li>关注彩票资讯但不想看推销内容的人</li>
+                <li>想对比不同彩种特点的理性浏览者</li>
+            </ul>
+        </div>
+        <div class="audience-box">
+            <h3>不适合这样的期待</h3>
+            <ul>
+                <li>寻找购彩或代购链接</li>
+                <li>获取“必中”“预测”类承诺</li>
+                <li>需要即时开奖结果（本站非实时）</li>
+                <li>希望参与讨论或社群交流</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-summary">
+        <h3>常见疑问摘要</h3>
+        <div class="faq-item">
+            <span class="q">page-lottery.com 是官网吗？</span>
+            <span class="a">不是。它是一个独立的信息整理站点，并非国家体彩中心运营。所有内容仅供学习与参考。</span>
+        </div>
+        <div class="faq-item">
+            <span class="q">内容多久更新一次？</span>
+            <span class="a">规则类内容随官方变动而更新；资讯类不定期补充。不保证每日更新，但保持信息有效性。</span>
+        </div>
+        <div class="faq-item">
+            <span class="q">能否通过本站购买彩票？</span>
+            <span class="a">不能。本站不接入任何支付或投注系统，也不提供跳转购彩链接。</span>
+        </div>
+    </div>
+
+</main>
+
+<footer class="footer-note">
+    <div class="container">
+        page-lottery.com · 信息卡片版 · 内容仅供参考，不构成任何购买建议。<br>
+        请理性参与，量力而行。
+    </div>
+</footer>
+
+</body>
+</html>
